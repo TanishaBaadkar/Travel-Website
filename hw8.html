@@ -1,0 +1,1954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+   <script src="moment.min.js"></script>
+   <script type="text/javascript" async src="https://platform.twitter.com/widgets.js"></script>
+
+  <style>
+ /* #outer{
+    background-color: #F8F8F8 ;
+
+
+  } */
+  .form-group.required .control-label:after {
+  content:"*";
+  color:red;
+}
+
+.btn.btn-link{
+  text-decoration: none;
+}
+
+.nav-rtl 
+{
+             padding-left:40px;
+             padding-right:0px;
+
+          }
+
+         .nav-rtl li {
+          float:right;
+          }
+
+ span.stars, span.stars span {
+      display: block;
+      background: url(http://www.ulmanen.fi/stuff/stars.png) 0 -16px repeat-x;
+      width: 80px;
+      height: 16px;
+    }
+  
+    span.stars span {
+      background-position: 0 0;
+    }
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial;
+}
+
+.header {
+    text-align: center;
+    padding: 32px;
+}
+
+.row {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    -ms-flex-wrap: wrap; /* IE10 */
+    flex-wrap: wrap;
+    padding: 0 4px;
+}
+
+/* Create four equal columns that sits next to each other */
+.column {
+    -ms-flex: 25%; /* IE10 */
+    flex: 25%;
+    max-width: 25%;
+    padding: 0 4px;
+}
+
+.column img {
+    margin-top: 8px;
+    vertical-align: middle;
+}
+
+/* Responsive layout - makes a two column-layout instead of four columns */
+@media screen and (max-width: 800px) {
+    .column {
+        -ms-flex: 50%;
+        flex: 50%;
+        max-width: 50%;
+    }
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .column {
+        -ms-flex: 100%;
+        flex: 100%;
+        max-width: 100%;
+    }
+}
+ #mapspace {
+        height: 400px;
+      }
+
+#right-panel {
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+      #right-panel select, #right-panel input {
+        font-size: 4px;
+      }
+
+#right-panel i {
+        font-size: 4px;
+      }
+      #right-panel {
+        
+        float: none;
+        
+        overflow: auto;
+      }
+
+      #fmapspace {
+        height: 400px;
+      }
+
+#fright-panel {
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+
+      #right-panel select, #right-panel input {
+        font-size: 4px;
+      }
+
+#fright-panel i {
+        font-size: 4px;
+      }
+      #fright-panel {
+        
+        float: none;
+        
+        overflow: auto;
+      }
+
+
+      #starrate {
+   color: gold;
+}
+#yelpstarrate {
+   color: gold;
+}
+#outertab {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#youtertab {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/*.venue_review  {
+  flex-basis: 100%;
+}
+</style>
+</head>
+<body onload="getGeo()">
+<div class="row">
+<div class="col-xs-2">
+</div>
+<div class="col-xs-8 well well-sm" id="outer">
+  <h3><center><b>Travel and Entertainment Search</b></center></h3>
+  <form class="form-horizontal" action="/action_page.php">
+    <div class="form-group required" >
+      <label class="control-label col-sm-2" for="keyword"> Keyword</label>
+      <div class="col-sm-1"> </div>
+          <div class="col-sm-7">
+        <input type="text" class="form-control" id="error1" name="keyword" onblur="check1(this)">
+        <div class="hidden" id="errormsg1">Please enter keyword</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="pwd">Category</label>
+      <div class="col-sm-1"> </div>
+      <div class="col-sm-4">          
+        <select class="form-control" id="category">
+  <option>Default</option>
+  <option>Airport</option>
+  <option>Amusement Park</option>
+  <option>Aquarium</option>
+  <option>Art Gallery</option>
+  <option>Bakery</option>
+  <option>Bar</option>
+  <option>Beauty Salon</option>
+  <option>Bowling Alley</option>
+  <option>Bus Station</option>
+  <option>Cafe</option>
+  <option>Campground</option>
+  <option>Car Rental</option>
+  <option>Casino</option>
+  <option>Lodging</option>
+  <option>Movie Theatre</option>
+  <option>Museum</option>
+  <option>Night Club</option>
+  <option>Park</option>
+  <option>Parking</option>
+  <option>Restaurant</option>
+  <option>Shopping Mall</option>
+  <option>Stadium</option>
+  <option>Subway Station</option>
+  <option>Taxi Stand</option>
+  <option>Train Station</option>
+  <option>Transit Station</option>
+  <option>Travel Agency</option>
+  <option>Zoo</option>
+</select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" for="distance"> Distance(in miles)</label>
+      <div class="col-sm-1"> </div>
+          <div class="col-sm-4">
+        <input type="number" class="form-control" id="distance" name="distance" placeholder="10">
+      </div>
+    </div>
+    <div class="form-group required">
+      <label class="control-label col-sm-2" for="from">From</label>
+      <div class="col-sm-1"> </div>
+          <div class="col-sm-7">
+       <div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" onclick="document.getElementById('location').disabled=true;" checked>
+    Current Location
+  </label>
+</div>
+<div class="radio">
+  <label>
+    <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2" onclick="check3()">
+    Other,Please Specify
+    
+    <input type="text" class=" col-sm-10 form-control" id="location" name="location" placeholder="Enter a Location" onblur="check2(this)" disabled>
+    <div class="hidden" id="errormsg2">Please enter a location</div>
+  </label>
+</div>
+      </div>
+    </div>
+
+    
+    <div class="form-group">        
+      <div class="col-sm-offset-1 col-sm-5"> 
+        <button type="button" id="search" class="btn btn-primary" onclick="try1()" disabled="true"><span class="glyphicon glyphicon-search" aria-hidden="true"></span>Search</button><button onclick="cleanup()" type="button" class="btn btn-default">Clear</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="col-xs-2">
+</div>
+</div>
+<div class="row"> <br>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 col-xs-offset-5">
+  <ul class="nav nav-pills">
+    <li class="active"><a data-toggle="pill" href="#home">Results</a></li>
+    <li><a data-toggle="pill" href="#menu1">Favorites</a></li>
+  </ul>
+</div>
+
+
+
+<div class="tab-content col-xs-offset-1 col-xs-10">
+    <div id="home" class="tab-pane fade in active"><br><br><br><br><br><br>
+      <div id="prog" class="progress hidden">
+  <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width:50%"">
+    <span class="sr-only">45% Complete</span>
+  </div>
+</div>
+
+    <div id="resulttable" class="hidden">
+    </div>
+
+    </div>
+
+    <div id="menu1" class="tab-pane fade">
+      <div id="resulttable1" class="">
+    </div>
+  
+    </div>
+    
+  </div>
+</div>
+
+
+
+
+<script>
+
+  function cleanup()
+  {
+    document.getElementById('resulttable').innerHTML="";
+    document.getElementById('error1').value="";
+    document.getElementById('category').value="Default";
+    document.getElementById('distance').value="";
+    document.getElementById('distance').placeholder="10";
+    document.getElementById('location').value="";
+    document.getElementById('location').placeholder="Enter a Location";
+    document.getElementById('optionsRadios1').checked=true;
+    document.getElementById('location').disabled=true;
+    butt = document.getElementById("search");
+
+       butt.disabled=true;
+       checker1=1;
+checker2=0;
+checker3=1;
+checkfinal=0;
+
+  }
+
+  function searchbttn(){
+
+    //alert("inside");
+
+if(checker1==1&&checker2==1&&checker3==1)
+   {
+       butt = document.getElementById("search");
+       butt.disabled=false;
+    //butt.className = butt.className.replace(/\bbtn btn-primary disabled\b/g, "btn btn-primary");
+      checkfinal=1;
+   }
+
+   
+
+  }
+
+
+
+
+   function getGeo(){
+  
+
+var req=new XMLHttpRequest();
+
+checker1=0;
+checker2=0;
+checker3=1;
+checkfinal=0;
+ lat="";
+ lon="";
+
+req.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          
+            //alert("wohooo");
+           var location= JSON.parse(this.responseText);
+
+            lat= location.lat;
+            lon= location.lon; 
+
+            checker1=1;
+
+            searchbttn();
+
+            favno=0;
+            no=0;
+            stored=0;
+
+          // document.getElementById("search").disabled=false;
+           //  document.getElementById("lat").value=lat;
+            // document.getElementById("lon").value=lon;
+
+              //alert(lat);
+              //alert(lon);
+
+}
+}
+    req.open("GET","http://ip-api.com/json",true);
+  req.send();
+
+}
+
+
+function check1(val)
+{
+   //alert("yo");
+  if(val.value==""||!val.value.replace(/\s/g, '').length)
+  {
+   //alert("yoooooooooooooo");
+
+     element1 = document.getElementById("error1");
+    element1.style.borderColor="red";
+  //  element1.className = element1.className.replace(/\bform-group\b/g, "form-group has-error");
+
+     element2 = document.getElementById("errormsg1");
+    element2.className = element2.className.replace(/\bhidden\b/g, "show");
+    element2.style.color="red";
+
+    //checker2=0;
+   //butt3 = document.getElementById("search");
+   //butt3.className = butt3.className.replace(/\bbtn btn-primary\b/g, "btn btn-primary disabled");
+
+
+  }
+
+  else{
+    element1 = document.getElementById("error1");
+     element1.style.borderColor="";
+
+     element2 = document.getElementById("errormsg1");
+    element2.className = element2.className.replace(/\bshow\b/g, "hidden");
+    element2.style.color="red";
+
+    checker2=1;
+    searchbttn();
+  }
+
+
+  }
+function check3()
+{
+  document.getElementById('location').disabled=false;
+ // document.getElementById('location').value="";
+  document.getElementById('location').placeholder="Enter a location";
+  checker3=0;
+  //checkfinal=0;
+   butt1 = document.getElementById("search");
+   butt1.disabled=true;
+  // butt1.className = butt1.className.replace(/\bbtn btn-primary\b/g, "btn btn-primary disabled");
+}
+
+function check2(val2)
+{
+   //checker3=0;
+   //butt1 = document.getElementById("search");
+   // butt1.className = butt1.className.replace(/\bbtn btn-primary\b/g, "btn btn-primary disabled");
+  if(val2.value==""||!val2.value.replace(/\s/g, '').length)
+  {
+   //alert("yoooooooooooooo");
+
+     element3 = document.getElementById("location");
+    element3.style.borderColor="red";
+  //  element1.className = element1.className.replace(/\bform-group\b/g, "form-group has-error");
+
+     element4 = document.getElementById("errormsg2");
+    element4.className = element4.className.replace(/\bhidden\b/g, "show");
+    element4.style.color="red";
+
+
+   
+  }
+
+  else{
+    element3 = document.getElementById("location");
+     element3.style.borderColor="";
+
+   element4 = document.getElementById("errormsg2");
+    element4.className = element4.className.replace(/\bshow\b/g, "hidden");
+    element4.style.color="red";
+
+    checker3=1;
+    searchbttn();
+  }
+
+
+  }
+
+  function try1()
+  {
+    //alert("yaaaay");
+
+    pro = document.getElementById("prog");
+    pro.className = pro.className.replace(/\bprogress hidden\b/g, "progress show");
+
+    
+    key=document.getElementById("error1").value;
+    cat1=document.getElementById("category");
+    cat= cat1.options[cat1.selectedIndex].text;
+    dist=document.getElementById("distance").value;
+    loc=document.getElementById("location").value;
+
+    opt=$("input[type='radio'][name='optionsRadios']:checked").val();
+    //alert(opt);
+
+    $.get("http://tanzwebtech-env.us-east-2.elasticbeanstalk.com?keyword="+key+"&category="+cat+"&distance="+dist+"&lat="+lat+"&lon="+lon+"&location="+loc+"&optionsRadios="+opt, function(data, status){
+
+      //alert(data);
+         places= JSON.parse(data);
+
+            //alert(places['result1']);
+            //alert(places['result2']);
+            //alert(places['result3']);
+
+            pro.className = pro.className.replace(/\bprogress show\b/g, "progress hidden"); 
+
+       tablediv=document.getElementById('resulttable') ;
+
+       firstresult=JSON.parse(places['result1']);
+       if(firstresult.status=="OK")
+       {
+          first();
+       }
+       else if(firstresult.status=="ZERO_RESULTS")
+       {
+        tablediv.innerHTML="<div class='table-responsive'><table class='table'><tbody><tr><td class='warning'>No Records.</td></tr></tbody></table></div>";
+         tablediv.className = tablediv.className.replace(/\bhidden\b/g, "show"); 
+       }
+       else
+       {
+        tablediv.innerHTML="<div class='table-responsive'><table class='table'><tbody><tr><td class='error'>Failed to get search results.</td></tr></tbody></table></div>";
+         tablediv.className = tablediv.className.replace(/\bhidden\b/g, "show"); 
+       }
+
+       secondresult=JSON.parse(places['result2']);
+       thirdresult=JSON.parse(places['result3']);
+
+    });
+
+  }
+
+  function first()
+  {
+    //tableno=1;
+    placetable1="<div class='table-responsive'><table class='table table-hover'><thead><tr><th>#</th><th>Category</th><th>Name</th><th>Address</th><th>Favorites</th><th>Details</th></tr></thead><tbody>";
+
+       for(var i=1;i<firstresult.results.length+1;i++)
+       {
+        icon1=firstresult.results[i-1].icon;
+       name1=firstresult.results[i-1].name;
+       vicinity1=firstresult.results[i-1].vicinity;
+          placetable1+="<tr id='"+i+"123'><td>"+i+"</td><td><img src="+icon1+" width=30></td><td>"+name1+"</td><td>"+vicinity1+"</td><td><button onclick='storage()' class='btn btn-default'><span id='"+i+"' class='glyphicon glyphicon-star'></span></button></td><td><button class='btn btn-default' value="+i+" onclick='getdetails1(this.value)'><span class='glyphicon glyphicon-menu-right'></span></button></td></tr>";
+      
+
+       }
+
+       placetable1+="</tbody></table></div>";
+
+       if(places['result2']!="")
+       {
+        placetable1+="<button class='btn btn-default col-xs-offset-5 col-xs-1 ' onclick='second()'>Next</button>";
+       }
+
+       tablediv.innerHTML="<button id='detailbutton' onclick='displaydet()' class='col-xs-offset-11 btn btn-default' disabled='true'>Details<span class='glyphicon glyphicon-menu-right'></span></button>"+placetable1;
+      tablediv.className = tablediv.className.replace(/\bhidden\b/g, "show"); 
+
+  }
+
+function second()
+{
+ placetable2="<div class='table-responsive'><table class='table table-hover'><thead><tr><th>#</th><th>Category</th><th>Name</th><th>Address</th><th>Favorites</th><th>Details</th></tr></thead><tbody>";
+
+       for(var i=1;i<secondresult.results.length+1;i++)
+       {
+        icon2=secondresult.results[i-1].icon;
+       name2=secondresult.results[i-1].name;
+       vicinity2=secondresult.results[i-1].vicinity;
+          placetable2+="<tr id='"+i+"123'><td>"+i+"</td><td><img src="+icon2+" width=30></td><td>"+name2+"</td><td>"+vicinity2+"</td><td><button onclick='storage()' class='btn btn-default'><span id='"+i+"' class='glyphicon glyphicon-star'></span></button></td><td><button class='btn btn-default' value="+i+" onclick='getdetails2(this.value)'><span class='glyphicon glyphicon-menu-right'></span></button></td></tr>";
+      
+
+       }
+
+       placetable2+="</tbody></table></div>";
+
+       if(places['result3']!="")
+       {
+        placetable2+="<div class='col-xs-offset-4 col-xs-3'><button class='btn btn-default 'onclick='first()'>Previous</button><button class='btn btn-default' onclick='third()'>&nbsp&nbsp&nbspNext&nbsp&nbsp&nbsp</button></div>";
+       }
+       else{
+        placetable2+="<button class='btn btn-default col-xs-offset-5 col-xs-3' onclick='first()'>Previous</button>";
+       }
+
+       tablediv.innerHTML="<button onclick='displaydet()' class='col-xs-offset-11 btn btn-default'>Details<span class='glyphicon glyphicon-menu-right'></span></button>"+placetable2;
+      //tablediv.className = tablediv.className.replace(/\bhidden\b/g, "show"); 
+}
+
+function third()
+{
+placetable3="<div class='table-responsive'><table class='table table-hover'><thead><tr><th>#</th><th>Category</th><th>Name</th><th>Address</th><th>Favorites</th><th>Details</th></tr></thead><tbody>";
+
+       for(var i=1;i<thirdresult.results.length+1;i++)
+       {
+        icon3=thirdresult.results[i-1].icon;
+       name3=thirdresult.results[i-1].name;
+       vicinity3=thirdresult.results[i-1].vicinity;
+          placetable3+="<tr id='"+i+"123'><td>"+i+"</td><td><img src="+icon3+" width=30></td><td>"+name3+"</td><td>"+vicinity3+"</td><td><button onclick='storage()' class='btn btn-default'><span id='"+i+"' class='glyphicon glyphicon-star'></span></button></td><td><button class='btn btn-default' value="+i+" onclick='getdetails3(this.value)'><span class='glyphicon glyphicon-menu-right'></span></button></td></tr>";
+      
+
+       }
+
+       placetable3+="</tbody></table></div>";
+
+      placetable3+="<button class='btn btn-default col-xs-offset-5 col-xs-1' onclick='second()'>Previous</button>";
+      
+
+       tablediv.innerHTML="<button onclick='displaydet()' class='col-xs-offset-11 btn btn-default'>Details<span class='glyphicon glyphicon-menu-right'></span></button>"+placetable3;
+}
+
+function displaydet()
+{
+  d=document.getElementById(glo);
+   tablediv.innerHTML=retain;
+   
+   if(d.style.color==""){
+    document.getElementById(glo1).style.color="";
+  }else{
+    document.getElementById(glo1).style.color="yellow";
+  }
+  
+}
+
+function getdetails1(placename1)
+{
+
+  placename=firstresult.results[placename1-1].name;
+  placeid=firstresult.results[placename1-1].place_id;
+  placeaddress=firstresult.results[placename1-1].vicinity;
+  placeicon=firstresult.results[placename1-1].icon;
+  //alert(document.getElementById('detailbutton').disabled);
+  //document.getElementById('detailbutton').disabled=false;
+
+pa=1;
+  //document.getElementById(placename1).addClass="bg-info";
+  //alert(placename);
+ // alert(placeid);
+  detail(placeid,placename,placename1);
+}
+
+function getdetails2(placename2)
+{
+
+  placename=secondresult.results[placename2-1].name;
+  placeid=secondresult.results[placename2-1].place_id;
+   placeaddress=secondresult.results[placename2-1].vicinity;
+    placeicon=secondresult.results[placename2-1].icon;
+   // document.getElementById('detailbutton').disabled=false;
+    //$('#placename').addClass="bg-info";
+    pa=2;
+ // alert(placename);
+  //alert(placeid);
+  detail(placeid,placename,placename2);
+}
+
+function getdetails3(placename3)
+{
+
+  placename=thirdresult.results[placename3-1].name;
+  placeid=thirdresult.results[placename3-1].place_id;
+   placeaddress=thirdresult.results[placename3-1].vicinity;
+    placeicon=thirdresult.results[placename3-1].icon;
+    //document.getElementById('detailbutton').disabled=false;
+    pa=3;
+    //$('#placename').addClass="bg-info";
+  //alert(placename);
+  //alert(placeid);
+  detail(placeid,placename,placename3);
+}
+function getphoto(no){
+              window.open(no);
+             }
+
+function disptable(r)
+{
+
+  retain=tablediv.innerHTML;
+  a=document.getElementById(glo1);
+  //alert("pageno"+page);
+  if(pa==1)
+   {tablediv.innerHTML="<button onclick='displaydet()' class='col-xs-offset-11 btn btn-default'>Details<span class='glyphicon glyphicon-menu-right'></span></button>"+placetable1;
+ document.getElementById(glo+123).style.backgroundColor="yellow";
+if(a.style.color==""){
+    document.getElementById(glo).style.color="";
+  }else{
+    document.getElementById(glo).style.color="yellow";
+  }
+}
+
+ if(pa==2)
+   {tablediv.innerHTML="<button onclick='displaydet()' class='col-xs-offset-11 btn btn-default'>Details<span class='glyphicon glyphicon-menu-right'></span></button>"+placetable2;
+ document.getElementById(glo+123).style.backgroundColor="yellow";
+if(a.style.color==""){
+    document.getElementById(glo).style.color="";
+  }else{
+    document.getElementById(glo).style.color="yellow";
+  }}
+
+ if(pa==3)
+   {tablediv.innerHTML="<button onclick='displaydet()' class='col-xs-offset-11 btn btn-default'>Details<span class='glyphicon glyphicon-menu-right'></span></button>"+placetable3;
+ document.getElementById(glo+123).style.backgroundColor="yellow";
+ for(i=0;i<glos.length;i++)
+ {
+  document.getElementById(glos[i]).style.color="yellow";
+ }
+if(a.style.color==""){
+    document.getElementById(glo).style.color="";
+  }else{
+    document.getElementById(glo).style.color="yellow";
+  }}
+
+}
+function detail(placeidd,placename,starid)
+{
+  glo=starid;
+  //alert("glo first time"+glo);
+  glo1=starid+"MM";
+  tablediv.innerHTML="<div class='col-xs-12'><center><h3><b>"+placename+"</b></h3><center></div><div class='row'><button name='"+starid+"' onclick='disptable(this.name)' class=' btn btn-default '>List<span class='glyphicon glyphicon-menu-left'></span></button><button onclick='storage()' class='col-xs-offset-10 btn btn-default btn-sm '><span id='"+glo1+"' class='glyphicon glyphicon-star'></span></button><a id='tweet' href='' class='btn btn-link' role='button'><img src='http://cs-server.usc.edu:45678/hw/hw8/images/Twitter.png' width='35'></a></div><ul class='nav nav-tabs nav-rtl'><li><a data-toggle='tab' href='#reviews'>Reviews</a></li><li><a data-toggle='tab' href='#mapstab'>Maps</a></li><li><a data-toggle='tab' href='#photos'>Photos</a></li><li class='active' ><a data-toggle='tab' href='#info'>Info</a></li></ul><div class='tab-content'><div id='reviews' class='tab-pane fade'><h3><b>Reviews</b></h3></div><div id='mapstab' class='tab-pane fade'>maps</div><div id='photos' class='tab-pane fade'><h3>photos</h3></div><div id='info' class='tab-pane fade in active'></div></div>";
+  
+  infotab=document.getElementById("info");
+  phototab=document.getElementById("photos");
+  mapstab=document.getElementById("mapstab");
+  reviewstab=document.getElementById("reviews");
+
+
+
+
+  //alert(mapstab.innerHTML);
+  var service = new google.maps.places.PlacesService(document.createElement('div'));
+
+        service.getDetails({
+          placeId: placeidd
+        }, function(place, status) {
+          if (status === google.maps.places.PlacesServiceStatus.OK) {
+            
+            //alert(place.price_level);
+           // alert(place.rating);
+            //alert(place.formatted_address);
+            //alert(place.international_phone_number);
+            add=place.formatted_address;
+            phone=place.international_phone_number;
+            price=place.price_level;
+            rating=place.rating;
+            page=place.url;
+            website=place.website;
+            utc=place.utc_offset;
+            opening=place.opening_hours;
+            photo=[];
+            photo=place.photos;
+            addresscomponents=[];
+            addresscomponents=place.address_components;
+            businessname=place.name;
+
+            twitter=document.getElementById("tweet");
+            if(String(website)!="undefined")
+            tex="text=Check out "+businessname+" located at "+add+" Website: &url="+website+"&hashtags= TravelAndEntertainmentSearch";
+            else tex="text=Check out "+businessname+" located at "+add+" Website: &url="+page+"&hashtags= TravelAndEntertainmentSearch";
+ 
+             res = encodeURI(tex);
+
+            twitter.href="https://twitter.com/intent/tweet?"+res;
+
+            address1=add.substr(0,60);
+            address2=add.substr(60,120);
+
+            //alert(address1);
+            //alert(address2);
+
+            //alert(addresscomponents[0].types[0]);
+
+            for(h=0;h<addresscomponents.length;h++)
+            {
+              if(addresscomponents[h].types[0]=="country")
+                country=addresscomponents[h].short_name;
+
+              if(addresscomponents[h].types[0]=="administrative_area_level_1")
+                state=addresscomponents[h].short_name;
+
+              if(addresscomponents[h].types[0]=="administrative_area_level_2")
+                city=addresscomponents[h].short_name;
+
+            }
+
+            //alert(country);
+            //alert(state);
+            //alert(city);
+
+
+            $.get("http://tanzwebtech-env.us-east-2.elasticbeanstalk.com?name="+businessname+"&address1="+address1+"&address2="+address2+"&city="+city+"&state="+state+"&country="+country, function(data, status){
+        //alert("Data: " + data + "\nStatus: " + status);
+          yelp=JSON.parse(data);
+        //alert(yelp['reviews'][0]['text']);
+        //alert(yelp['reviews'].length);
+        yelplen=yelp['reviews'].length;
+        yelpphoto=[];
+        yelptext=[];
+        yelpname=[];
+        yelptime=[];
+        yelprating=[];
+        yelpurl=[];
+
+       if(data!="no results")
+       {
+        for(f=0;f<yelplen;f++)
+        {
+
+        yelpphoto[f]=yelp['reviews'][f]['user']['image_url'];
+        yelptext[f]=yelp['reviews'][f]['text'];
+        yelpname[f]=yelp['reviews'][f]['user']['name'];
+        yelptime[f]=yelp['reviews'][f]['time_created'];
+        yelprating[f]=yelp['reviews'][f]['rating'];
+        yelpurl[f]=yelp['reviews'][f]['url']; 
+
+        }
+
+        //alert(yelpphoto[0]);
+        //alert(yelptext[0]);
+        //alert(yelpname[0]);
+        //alert(yelptime[0]);
+        //alert(yelprating[0]);
+        //alert(yelpurl[0]);
+
+
+        yelpratingstar="";
+       yelpstarrate=[];
+            for(e=0;e<yelplen;e++)
+            {
+              for(f=0;f<yelprating[e];f++)
+                yelpratingstar+="<span id='yelpstarrate' class='glyphicon glyphicon-star'></span>";
+              yelpstarrate[e]=yelpratingstar;
+              yelpratingstar="";
+            }
+
+            yelpreviewtable="<div id='youtertab' class='col-xs-12'><div class='row invisible'></div>";
+
+         for(m=0;m<yelplen;m++)
+         {
+
+     yelpreviewtable+="<div style='border:1px solid #D3D3D3;' class='media y_venue_review'><div class='media-left'><img onclick='yelpopenprofile("+m+")' src='"+yelpphoto[m]+"' class='media-object' style='width:40px'></div><div class='media-body'><a style='color:RoyalBlue;' href='"+yelpurl[m]+"' target='_blank' class='media-heading'>"+yelpname[m]+"</a><div class='hidden' id='ydeforder'>"+m+"</div><div><span>"+yelpstarrate[m]+"</span><div class='hidden y_ranking'>"+yelprating[m]+"</div><span class='y_review-published-date' style='color:DarkGrey;'>"+yelptime[m]+"</span></div><div>"+yelptext[m]+"</div></div></div>";
+
+         }
+
+     yelpreviewtable+="</div>";
+
+}
+
+/*else if(data=="no results")
+  {yelpreviewtable="<div class='table-responsive'><table class='table'><tbody><tr><td class='warning'>No Records.</td></tr></tbody></table></div>";
+}*/
+     document.getElementById("reviewtype").addEventListener('change',checkreviewtype);
+     function checkreviewtype()
+{ //alert(reviewtype.value);
+     if(reviewtype.value=="google")
+     {
+     reviewarea.innerHTML=reviewtable;
+
+     document.getElementById('revieworder').value="default";
+
+     reviews = [];
+ items = document.querySelectorAll('.venue_review');
+for (s = 0; s < items.length; s++) {
+  dat = items[s].querySelector('.review-published-date').innerHTML.split(" ")[0];
+  //alert(dat);
+  ranking = items[s].querySelector('.ranking').innerHTML;
+  deforder=items[s].querySelector('#deforder').innerHTML;
+  reviews.push({
+    id: s,
+    dat: Date.parse(dat),
+    ranking:Number(ranking),
+    deforder:Number(deforder)
+  });
+} 
+
+     }
+
+     if(reviewtype.value=="yelp")
+     {
+      
+     reviewarea.innerHTML=yelpreviewtable;
+     document.getElementById('revieworder').value="default";
+     //document.getElementById('revieworder').innerHTML="Default Order;"
+     //alert(document.getElementById('revieworder').value);
+
+     yreviews = [];
+ yitems = document.querySelectorAll('.y_venue_review');
+ //alert("yitems"+yitems.length);
+ for (v = 0; v < yitems.length; v++) {
+  ydat = yitems[v].querySelector('.y_review-published-date').innerHTML.split(" ")[0];
+  //alert("is this happeneinggg");
+  yranking = yitems[v].querySelector('.y_ranking').innerHTML;
+  ydeforder=yitems[v].querySelector('#ydeforder').innerHTML;
+  yreviews.push({
+    yid: v,
+    ydat: Date.parse(ydat),
+    yranking:Number(yranking),
+    ydeforder:Number(ydeforder)
+  });
+}
+
+     }
+}
+
+ 
+
+// Functions to sort reviews by date
+ ysortRecent = function(m, n) {
+
+  return n.ydat - m.ydat;
+};
+ ysorthigh = function(m, n) {
+
+  return n.yranking - m.yranking;
+};
+
+ ysortOldest = function(m, n) {
+  //alert(m.date - n.date);
+  return m.ydat - n.ydat;
+}
+
+ ysortlow = function(m, n) {
+  // alert(m.rating - n.rating);
+  return m.yranking - n.yranking;
+}
+ ysortdef = function(m, n) {
+  // alert(m.rating - n.rating);
+  return m.ydeforder - n.ydeforder;
+}
+
+// Function to apply the sorted order
+ yapplyOrder = function(ysorted) {
+  for (v = 0; v < ysorted.length; v++) {
+  //alert(sorted[i].id);
+    // This is the crucial part where you
+    // change the visual order of the elements
+    // according to their sorting
+    yitems[ysorted[v].yid].style.order = v;
+  }
+};
+
+// Functions to handle the clickies
+ yrecentHandler = function() {
+   ysorted = yreviews.sort(ysortRecent);
+  
+  yapplyOrder(ysorted);
+};
+
+ yoldestHandler = function() {
+ // alert("yupoldest");
+   ysorted = yreviews.sort(ysortOldest);
+  //alert(sorted[0].id);
+  //alert(sorted[1].id);
+  //alert(sorted[2].id);
+  //alert(sorted[3].id);
+  yapplyOrder(ysorted);
+};
+
+ yhighHandler = function() {
+  //alert("yuphighest");
+   ysorted = yreviews.sort(ysorthigh);
+  //alert(sorted[0].id);
+  //alert(sorted[1].id);
+  //alert(sorted[2].id);
+  //alert(sorted[3].id);
+  yapplyOrder(ysorted);
+};
+
+ ylowHandler = function() {
+  //alert("yuplowest");
+   ysorted = yreviews.sort(ysortlow);
+  
+  yapplyOrder(ysorted);
+};
+
+ ydefHandler = function() {
+  //alert("yupdef");
+   ysorted = yreviews.sort(ysortdef);
+  
+  yapplyOrder(ysorted);
+};
+
+// Create an array of review objects for sorting
+
+/*document.getElementById('recent').addEventListener('click', recentHandler);
+document.getElementById('oldest').addEventListener('click', oldestHandler);
+document.getElementById('high rating').addEventListener('click', highHandler);
+document.getElementById('low rating').addEventListener('click', lowHandler); */
+document.getElementById("revieworder").addEventListener('change',checkoption);
+function checkoption()
+{
+revieworder=document.getElementById("revieworder").value;
+reviewtype=document.getElementById('reviewtype');
+  //alert(revieworder);
+  //alert(reviewtype.value);
+if(revieworder=="default"&&reviewtype.value=="google")
+{
+
+defHandler();
+}
+
+if(revieworder=="default"&&reviewtype.value=="yelp")
+{
+
+ydefHandler();
+}
+
+
+if(revieworder=="highrank"&&reviewtype.value=="google")
+{
+
+highHandler();
+}
+
+if(revieworder=="highrank"&&reviewtype.value=="yelp")
+{
+
+yhighHandler();
+}
+
+if(revieworder=="lowrank"&&reviewtype.value=="google")
+{
+  lowHandler();
+}
+if(revieworder=="lowrank"&&reviewtype.value=="yelp")
+{
+  ylowHandler();
+}
+if(revieworder=="leastrecent"&&reviewtype.value=="google")
+{
+  oldestHandler();
+}
+if(revieworder=="leastrecent"&&reviewtype.value=="yelp")
+{
+  yoldestHandler();
+}
+if(revieworder=="mostrecent"&&reviewtype.value=="google")
+{
+  recentHandler();
+}
+if(revieworder=="mostrecent"&&reviewtype.value=="yelp")
+{
+ yrecentHandler();
+}
+}
+
+ 
+    });
+
+       
+
+            //alert(photo);
+            //alert(photo.length);
+            photosurls=[];
+            photourl=[];
+            PHOTO="";
+
+             if(String(photo)=="undefined")
+             {
+              phototab.innerHTML="<div class='table-responsive'><table class='table'><tbody><tr><td class='warning'>No Records.</td></tr></tbody></table></div>";
+             }
+            if(String(photo)!="undefined")
+            {
+            for(i=0;i<photo.length;i++)
+            {
+              photosurls[i]=photo[i].getUrl({'maxWidth': 1000, 'maxHeight': 35});
+            photourl[i]=photosurls[i].split("=")[0];
+           // PHOTO+="<img class='img-thumbnail' src='"+photourl[i]+"' width=280 height=280>";
+            }
+             if(photo.length==1)
+             {
+              PHOTO+="<div class='row'><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[0]+"'style='width:100%'></div></div>";
+             }
+             if(photo.length==2)
+             {
+              PHOTO+="<div class='row'><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[0]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)'src='"+photourl[1]+"'style='width:100%'></div></div>";
+             }
+             if(photo.length==3)
+             {
+              PHOTO+="<div class='row'><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[0]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)'src='"+photourl[1]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)'src='"+photourl[2]+"'style='width:100%'></div></div>";
+             }
+            if(photo.length==4)
+             {
+              PHOTO+="<div class='row'><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[0]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)'src='"+photourl[1]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[2]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)'src='"+photourl[3]+"'style='width:100%'></div></div>";
+             }
+             if(photo.length==5)
+             {
+              PHOTO+="<div class='row'><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[0]+"'style='width:100%'><img onclick='getphoto(this.src)'src='"+photourl[4]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[1]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)'src='"+photourl[2]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[3]+"'style='width:100%'></div></div>";
+             }
+             if(photo.length==6)
+             {
+              PHOTO+="<div class='row'><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[0]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[4]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)'src='"+photourl[1]+"'style='width:100%'><img onclick='getphoto(this.src)'src='"+photourl[5]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)'src='"+photourl[2]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[3]+"'style='width:100%'></div></div>";
+             }
+             if(photo.length==7)
+             {
+              PHOTO+="<div class='row'><div class='column'><img onclick='getphoto(this.src)'src='"+photourl[0]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[4]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)'src='"+photourl[1]+"'style='width:100%'><img onclick='getphoto(this.src)'src='"+photourl[5]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[2]+"'style='width:100%'><img onclick='getphoto(this.src)'src='"+photourl[6]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[3]+"'style='width:100%'></div></div>";
+             }
+             if(photo.length==8)
+             {
+              PHOTO+="<div class='row'><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[0]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[4]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)'src='"+photourl[1]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[5]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[2]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[6]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[3]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[7]+"'style='width:100%'></div></div>";
+             }
+             if(photo.length==9)
+             {
+              PHOTO+="<div class='row'><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[0]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[4]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[8]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[1]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[5]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[2]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[6]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[3]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[7]+"'style='width:100%'></div></div>";
+             }
+             if(photo.length==10)
+             {
+              PHOTO+="<div class='row'><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[0]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[4]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[8]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[1]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[5]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[9]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[2]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[6]+"'style='width:100%'></div><div class='column'><img onclick='getphoto(this.src)' src='"+photourl[3]+"'style='width:100%'><img onclick='getphoto(this.src)' src='"+photourl[7]+"'style='width:100%'></div></div>";
+             }
+
+             
+
+            phototab.innerHTML=PHOTO;
+}
+
+            REVIEW="<div class='row'><div class='col-xs-2'><select id='reviewtype' class='form-control'><option value='google'>Google Reviews</option><option value='yelp'>Yelp Reviews</option></select></div><div class='col-xs-2'><select id='revieworder' class='form-control'><option value='default'>Default Order</option><option value='highrank'>Highest Rating</option><option value='lowrank'>Lowest Rating</option><option value='mostrecent'>Most Recent</option><option value='leastrecent'>Least Recent</option></select></div></div><div class='row'><div id='reviewarea' class='col-xs-12'>gcgchgc</div></div>";
+
+             reviewstab.innerHTML=REVIEW;
+
+             review=place.reviews;
+            //alert(review[0].time);
+
+           /*var date1 = new Date('January 1, 1970, 24:00:00');
+           date1.setUTCSeconds(review[0].time);
+           alert(date1);
+
+           year=date1.getFullYear();
+           month=date1.getMonth()+1;
+           date=date1.getDate();
+           hour=date1.getHours();
+           minute=date1.getMinutes();
+           sec=date1.getSeconds();
+*/
+           datebig=moment.unix(review[0].time).format('YYYY-MM-DD h:mm:ss');
+           //datesmall=moment.unix(review[0].time).format('YYYY-MM-DD');
+          // alert(datesmall);
+           //alert(datebig);
+
+           //alert(moment.unix(review[0].time).format('YYYY-MM-DD h:mm:ss'));
+
+             reviewarea=document.getElementById("reviewarea");
+             //reviewtype=document.getElementById('reviewtype').value;
+             if(review.length==0)
+             {
+              reviewtable="<div class='table-responsive'><table class='table'><tbody><tr><td class='warning'>No Records.</td></tr></tbody></table></div>";
+             }
+
+             //alert(revieworder);
+
+             //reviewarea.innerHTML="<img src='"+review[0].profile_photo_url+"'>";
+             authpic=[]; 
+             authname=[];
+             authurl=[];
+             authrating=[];
+             authtext=[];
+             authtime=[];
+             starrate=[];
+             datebig=[];
+            for(j=0;j<review.length;j++)
+            {
+              authpic[j]=review[j].profile_photo_url;
+              authname[j]=review[j].author_name;
+              authurl[j]=review[j].author_url;
+              authrating[j]=review[j].rating;
+              authtext[j]=review[j].text;
+              authtime[j]=review[j].time;
+            }
+         //window.open(authurl[0]);
+            ratingstar="";
+            for(k=0;k<authrating.length;k++)
+            {
+              for(l=0;l<authrating[k];l++)
+                ratingstar+="<span id='starrate' class='glyphicon glyphicon-star'></span>";
+              starrate[k]=ratingstar;
+              ratingstar="";
+            }
+              //alert(authrating[1]) ;
+            //alert(starrate[1]);
+           //reviewarea.innerHTML=star[0];
+          for(n=0;n<authtime.length;n++)
+          {
+            datebig[n]=moment.unix(authtime[n]).format('YYYY-MM-DD h:mm:ss');
+          }
+
+          
+
+         reviewtable="<div id='outertab' class='col-xs-12'><div class='row invisible'></div>";
+
+         for(m=0;m<review.length;m++)
+         {
+
+     reviewtable+="<div style='border:1px solid #D3D3D3;' class='media venue_review'><div class='media-left'><img onclick='openprofile("+m+")' src='"+authpic[m]+"' class='media-object' style='width:40px'></div><div class='media-body'><a style='color:RoyalBlue;' href='"+authurl[m]+"' target='_blank' class='media-heading'>"+authname[m]+"</a><div class='hidden' id='deforder'>"+m+"</div><div><span>"+starrate[m]+"</span><div class='hidden ranking'>"+authrating[m]+"</div><span class='review-published-date' style='color:DarkGrey;'>"+datebig[m]+"</span></div><div>"+authtext[m]+"</div></div></div>";
+
+         }
+
+     reviewtable+="</div>";
+
+     reviewarea.innerHTML=reviewtable;
+
+     reviews = [];
+ items = document.querySelectorAll('.venue_review');
+
+// Functions to sort reviews by date
+ sortRecent = function(m, n) {
+
+  return n.dat - m.dat;
+};
+ sorthigh = function(m, n) {
+
+  return n.ranking - m.ranking;
+};
+
+ sortOldest = function(m, n) {
+  //alert(m.date - n.date);
+  return m.dat - n.dat;
+}
+
+ sortlow = function(m, n) {
+  // alert(m.rating - n.rating);
+  return m.ranking - n.ranking;
+}
+ sortdef = function(m, n) {
+  // alert(m.rating - n.rating);
+  return m.deforder - n.deforder;
+}
+
+// Function to apply the sorted order
+ applyOrder = function(sorted) {
+  for (s = 0; s < sorted.length; s++) {
+  //alert(sorted[i].id);
+    // This is the crucial part where you
+    // change the visual order of the elements
+    // according to their sorting
+    items[sorted[s].id].style.order = s;
+  }
+};
+
+// Functions to handle the clickies
+ recentHandler = function() {
+   sorted = reviews.sort(sortRecent);
+  
+  applyOrder(sorted);
+};
+
+ oldestHandler = function() {
+   sorted = reviews.sort(sortOldest);
+  //alert(sorted[0].id);
+  //alert(sorted[1].id);
+  //alert(sorted[2].id);
+  //alert(sorted[3].id);
+  applyOrder(sorted);
+};
+
+ highHandler = function() {
+   sorted = reviews.sort(sorthigh);
+  //alert(sorted[0].id);
+  //alert(sorted[1].id);
+  //alert(sorted[2].id);
+  //alert(sorted[3].id);
+  applyOrder(sorted);
+};
+
+ lowHandler = function() {
+   sorted = reviews.sort(sortlow);
+  
+  applyOrder(sorted);
+};
+
+ defHandler = function() {
+   sorted = reviews.sort(sortdef);
+  
+  applyOrder(sorted);
+};
+
+// Create an array of review objects for sorting
+for (s = 0; s < items.length; s++) {
+  dat = items[s].querySelector('.review-published-date').innerHTML.split(" ")[0];
+  //alert(dat);
+  ranking = items[s].querySelector('.ranking').innerHTML;
+  deforder=items[s].querySelector('#deforder').innerHTML;
+  reviews.push({
+    id: s,
+    dat: Date.parse(dat),
+    ranking:Number(ranking),
+    deforder:Number(deforder)
+  });
+} 
+     
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+            if(String(opening)!="undefined")
+            {
+              openinghours=place.opening_hours.open_now;
+              weekday=[];
+            weekday=place.opening_hours.weekday_text;
+            //alert(weekday);
+            //alert(utc);
+             days=[];
+            var userDate = moment().utcOffset(utc).format('dddd');
+            
+            if(String(userDate)=="Monday")
+            {
+              days[0]=weekday[0]; days[1]=weekday[1]; days[2]=weekday[3]; days[3]=weekday[3]; days[4]=weekday[4]; days[5]=weekday[5]; days[6]=weekday[6];
+              }
+
+            if(String(userDate)=="Tuesday")
+            {
+              days[0]=weekday[1]; days[1]=weekday[2]; days[2]=weekday[3]; days[3]=weekday[4]; days[4]=weekday[5]; days[5]=weekday[6]; days[6]=weekday[0];
+              }
+            if(String(userDate)=="Wednesday")
+            {
+              days[0]=weekday[2]; days[1]=weekday[3]; days[2]=weekday[4]; days[3]=weekday[5]; days[4]=weekday[6]; days[5]=weekday[0]; days[6]=weekday[1];
+              }
+              if(String(userDate)=="Thursday")
+            {
+              days[0]=weekday[3]; days[1]=weekday[4]; days[2]=weekday[5]; days[3]=weekday[6]; days[4]=weekday[0]; days[5]=weekday[1]; days[6]=weekday[2];
+              }
+              if(String(userDate)=="Friday")
+            {
+              days[0]=weekday[4]; days[1]=weekday[5]; days[2]=weekday[6]; days[3]=weekday[0]; days[4]=weekday[1]; days[5]=weekday[2]; days[6]=weekday[3];
+              }
+              if(String(userDate)=="Saturday")
+            {
+              days[0]=weekday[5]; days[1]=weekday[6]; days[2]=weekday[0]; days[3]=weekday[1]; days[4]=weekday[2]; days[5]=weekday[3]; days[6]=weekday[4];
+              }
+              if(String(userDate)=="Sunday")
+            {
+              days[0]=weekday[6]; days[1]=weekday[0]; days[2]=weekday[1]; days[3]=weekday[2]; days[4]=weekday[3]; days[5]=weekday[4]; days[6]=weekday[5];
+              }
+
+           //alert(days);
+          // alert(day[0]);
+            }
+            
+           //alert(place.price_level);
+           //if(String(price)=="undefined") alert("oh no"); else alert("not detecting");
+//infotab.innerHTML="<p>";
+
+infotable="<div class='container'><table class='table table-striped'><tbody>";
+if (String(add)!="undefined")
+{
+infotable+="<tr><th>Address</th><td>"+add+"</td><td></td><td></td></tr>";
+}
+if (String(phone)!="undefined")
+{
+infotable+="<tr><th>Phone Number</th><td>"+phone+"</td><td></td><td></td></tr>";
+}
+if (String(price)!="undefined")
+{
+  if(price==0) priceconv=0;
+   if(price==1) priceconv="$";
+   if(price==2) priceconv="$$";
+   if(price==3) priceconv="$$$";
+   if(price==4) priceconv="$$$$";
+
+infotable+="<tr><th>Price Level</th><td>"+priceconv+"</td><td></td><td></td></tr>";
+} 
+if (String(rating)!="undefined")
+{
+infotable+="<tr><th>Rating</th><td><div><p></div></td><td></td><td></td></tr>";
+}
+if (String(page)!="undefined")
+{
+infotable+="<tr><th>Google Page</th><td><a href='"+page+"' target='_blank'>"+page+"</a></td><td></td><td></td></tr>";
+}
+if (String(website)!="undefined")
+{
+infotable+="<tr><th>Website</th><td><a href='"+website+"' target='_blank'>"+website+"</a></td><td></td><td></td></tr>";
+}
+if(String(opening)!="undefined")
+{
+
+  if(String(openinghours)=="true")
+  {
+    time=[];
+    time=days[0].split("y:");
+   // alert(time[1]);
+   // alert(time[0]);
+
+    openval="Open Now:"+time[1]+"<button type='button' class='btn btn-link' data-toggle='modal' data-target='.myModal'>Daily open hours</button><div class='modal fade myModal' role='dialog'><div class='modal-dialog modal-sm'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button><h4 class='modal-title'><center>Open Hours</center></h4></div><div class='modal-body'><table class='table'><tbody><tr><th><center>"+days[0]+"</center></th></tr><tr><td><center>"+days[1]+"</center></td></tr><tr><td><center>"+days[2]+"</center></td></tr><tr><td><center>"+days[3]+"</center></td></tr><tr><td><center>"+days[4]+"<center></td></tr><tr><td><center>"+days[5]+"</center></td></tr><tr><td><center>"+days[6]+"</center></td></tr></tbody></table></div><div class='modal-footer'><button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div></div></div></div>";
+
+
+
+  }
+  else  {
+    openval="Closed <button type='button' class='btn btn-link' data-toggle='modal' data-target='.myModal'>Daily open hours</button><div class='modal fade myModal'  role='dialog'><div class='modal-dialog modal-sm'><div class='modal-content'><div class='modal-header'><button type='button' class='close' data-dismiss='modal'>&times;</button><h4 class='modal-title'><center>Open Hours</center></h4></div><div class='modal-body'><table class='table'><tbody><tr><th><center>"+days[0]+"</center></th></tr><tr><td><center>"+days[1]+"</center></td></tr><tr><td><center>"+days[2]+"</center></td></tr><tr><td><center>"+days[3]+"</center></td></tr><tr><td><center>"+days[4]+"<center></td></tr><tr><td><center>"+days[5]+"</center></td></tr><tr><td><center>"+days[6]+"</center></td></tr></tbody></table></div><div class='modal-footer'><button type='button' class='btn btn-default' data-dismiss='modal'>Close</button></div></div></div></div>"; }
+
+
+  infotable+="<tr><th>Hours</th><td id='in'></td><td></td><td></td></tr>";
+}
+
+else openval="";
+
+infotable+= "</tbody></table></div>";
+
+
+infotab.innerHTML=infotable;
+if(document.getElementById('in')!=null)
+document.getElementById('in').innerHTML=openval;
+
+
+ $(function() {        
+      
+        $('p').html(rating+'<span class="stars">'+parseFloat(rating)+'</span>');
+        $('span.stars').stars();
+            
+      
+    });
+
+    $.fn.stars = function() {
+      return $(this).each(function() {
+        $(this).html($('<span />').width(Math.max(0, (Math.min(5, parseFloat($(this).html())))) * 16));
+      });
+    }
+            //infotab.innerHTML=add+"ghhhj"+phone+"bbb"+rating+"bbb"+page+"sss"+website;
+          }
+        });
+
+
+//from=document.getElementById("fromlocation");
+     if(opt=="option1")
+     {
+        
+        fromvalue="Your Location"
+     }
+
+     else fromvalue=loc;
+
+     MAPS="";
+     MAPS+="<div class='col-sm-12'><div class='form-group'><div class='col-sm-3'><label for='text'>From</label><input type='text' class='form-control' id='fromlocation' value='"+fromvalue+"' name='fromlocation'></div><div class='col-sm-4'><label>To</label><input type='text' class='form-control' id='tolocation' value='"+placeaddress+"' name='tolocation' readonly></div><div class='col-sm-3'><label>Travel Mode</label><select id='mode' class='form-control'><option value='DRIVING'>Driving</option><option value='BICYCLING'>Bicycling</option><option value='TRANSIT'>Transit</option><option value='WALKING'>Walking</option></select></div><div class='col-sm-2'><div class='row invisible'>hhhh</div><div class='row'><button type='button' id='"+fromvalue+"' class='btn btn-primary' onclick='getdir(this.id)'>Get Directions</button></div></div></div></div><div class='col-sm-2'><button id='pic' class='btn btn-link' ><img id='smallpic' onclick='chooseview()' src='http://cs-server.usc.edu:45678/hw/hw8/images/Pegman.png' width='33'></button></div><div class='col-xs-12' id='mapspace'></div><div id='right-panel' class='col-xs-12'></div>";
+
+mapstab.innerHTML=MAPS;
+
+autocomplete1 = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('fromlocation')),
+            {types: ['geocode']});
+
+/*from=document.getElementById("fromlocation");
+     if(opt=="option1")
+     {
+        
+        from.value="Your Location"
+     }
+
+     else from.value=loc;
+
+   */
+
+ initMap();
+
+//mapstab.innerHTML=MAPS;
+
+
+
+      }
+
+  
+
+      function getdir(fro)
+      {
+        //fromval=from.value;
+        
+        if(fro.toUpperCase()=="YOUR LOCATION"||fro.toUpperCase()=="MY LOCATION")
+        {
+          
+          origin1={'lat':Number(lat), 'lng': Number(lon)};
+        }
+        else
+        {
+          origin1=fro;
+        }
+        //initMap();
+       // directionsDisplay.setMap(null);
+        //directionsDisplay=null;
+        //var directionsDisplay = new google.maps.DirectionsRenderer;
+       // var directionsService = new google.maps.DirectionsService;
+
+        //directionsDisplay.setMap(null);
+        //directionsDisplay.set('directions', null);
+       // directionsDisplay.setMap(map);
+       // document.getElementById('right-panel').innerHTML="";
+      // directionsDisplay.setPanel(null);
+       // directionsDisplay.setPanel(document.getElementById('right-panel'));
+       directionsDisplay.setMap(null);
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(null);
+        directionsDisplay.setPanel(document.getElementById('right-panel'));
+
+        calculateAndDisplayRoute(directionsService, directionsDisplay);
+        document.getElementById('mode').addEventListener('change', function() {
+          calculateAndDisplayRoute(directionsService, directionsDisplay);
+        });
+      }
+
+      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+
+        marker.setMap(null);
+        
+        var selectedMode = document.getElementById('mode').value;
+        //alert(origin1);
+        directionsService.route({
+          origin:origin1,  // Haight.
+          destination:placeaddress,
+          provideRouteAlternatives: true,  // Ocean Beach.
+          // Note that Javascript allows us to access the constant
+          // using square brackets and a string value as its
+          // "property."
+          travelMode: google.maps.TravelMode[selectedMode]
+        }, function(response, status) {
+          if (status == 'OK') {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
+
+      function chooseview()
+      {
+        //alert(setpic);
+         if(setpic==1)
+         {
+          a=document.getElementById("smallpic");
+           a.src= "http://cs-server.usc.edu:45678/hw/hw8/images/Map.png";
+          initialize();
+         }
+         else
+         {
+          b=document.getElementById("smallpic");
+         
+          b.src="http://cs-server.usc.edu:45678/hw/hw8/images/Pegman.png";
+          initMap();
+         }
+      }
+
+      function initialize() {
+       // var setpic;
+        var panorama = new google.maps.StreetViewPanorama(
+            document.getElementById('mapspace'),
+            {
+              position: placeval,
+              pov: {heading: 165, pitch: 0},
+              zoom: 1
+            });
+        setpic=0;
+      }
+
+      function initMap() {
+        //alert(document.getElementById('mapspace').innerHTML); 
+         map = new google.maps.Map(document.getElementById('mapspace'), {
+          zoom: 8,
+          center: {lat: -34.397, lng: 150.644}
+        }); 
+         geocoder = new google.maps.Geocoder();
+          directionsDisplay = new google.maps.DirectionsRenderer;
+         directionsService = new google.maps.DirectionsService;
+
+       // alert(document.getElementById('mapspace').innerHTML);
+       //alert(placename+","+placeaddress);
+          geocodeAddress(geocoder, map,placename+","+placeaddress);
+        
+      }
+
+      function geocodeAddress(geocoder, resultsMap,add) {
+        setpic=1;
+        var address = add;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            placeval=results[0].geometry.location;
+            resultsMap.setCenter(results[0].geometry.location);
+            marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+           // alert(document.getElementById('mapspace').innerHTML);
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+      
+
+
+      function initAutocomplete() {
+        
+        autocomplete = new google.maps.places.Autocomplete(
+            /** @type {!HTMLInputElement} */(document.getElementById('location')),
+            {types: ['geocode']});
+
+        
+         getmap=1;
+      }
+
+      function openprofile(no)
+     {
+    window.open(authurl[no]);
+     }
+
+     function yelpopenprofile(no)
+     {
+    window.open(yelpurl[no]);
+     }
+
+     function storage()
+     {
+      //alert("glooo"+glo);
+      if(document.getElementById(glo)!=null)
+      {
+       if(document.getElementById(glo).style.color==""){
+      
+    document.getElementById(glo).style.color="yellow";
+    
+  }else{
+    document.getElementById(glo).style.color="";
+    
+  } }
+
+   if(document.getElementById(glo1)!=null)
+      {
+       if(document.getElementById(glo1).style.color==""){
+      
+    document.getElementById(glo1).style.color="yellow";
+    
+  }else{
+    document.getElementById(glo1).style.color="";
+    
+  } }
+
+  
+      if (localStorage.getItem(placeid) === null) {
+  
+//t.style.color="yellow";
+      
+    //  favval=[];
+    //  favval=placeid;
+      glos=[];
+      glos=glo;
+      
+      //alert(placename);
+      //alert(placeaddress);
+     
+     var info=infotab.innerHTML;
+    var  photo=phototab.innerHTML;
+     var maps=mapstab.innerHTML;
+     var reviews=reviewstab.innerHTML;
+      //alert(placeicon);
+      //alert(info);
+      //alert(photo);
+      //alert(maps);
+      //alert(reviews);
+      var values={placeid:placeid,placename:placename,placeaddress:placeaddress,placeicon:placeicon,info:info,photo:photo,maps:maps,lat:lat,lon:lon,fromvalue:fromvalue,reviewtable:reviewtable,yelpreviewtable:yelpreviewtable,res:res};
+//localStorage.clear();
+      localStorage.setItem(placeid, JSON.stringify(values));
+       //localStorage.setItem(placeid, JSON.stringify(values));
+       //localstorage.removeItem(1);
+       //localstorage.removeItem('2');
+       //localstorage.removeItem('placetable');
+//document.getElementById(glo).style.color="yellow";
+       fav();
+     }
+     else if (localStorage.getItem(placeid) != null) {
+      //alert("already there");
+      //t.style.color="";
+    //  document.getElementById(glo).style.color="";
+          delstorage(placeid);
+}
+     }
+
+
+
+     // FAVORITES
+
+     fav();
+
+
+     function fav()
+     {
+       tab1="";
+//alert(Object.keys(localStorage));
+//stor=[];
+//alert(favval.length);
+tablediv1=document.getElementById("resulttable1");
+
+     tab1="<div class='table-responsive'><table class='table table-hover'><thead><tr><th>#</th><th>Category</th><th>Name</th><th>Address</th><th>Favorites</th><th>Details</th></tr></thead><tbody>";
+
+      k=Object.keys(localStorage).length;
+     for(i=1;i<Object.keys(localStorage).length+1;i++)
+     {
+        stor = JSON.parse(localStorage.getItem(Object.keys(localStorage)[k-1]));
+       tab1+="<tr id='"+stor.placeid+"'><td>"+i+"</td><td><img src="+stor.placeicon+" width=30></td><td>"+stor.placename+"</td><td>"+stor.placeaddress+"</td><td><button value="+stor.placeid+" onclick='delstorage(this.value)' class='btn btn-default'><span class='glyphicon glyphicon-trash'></span></button></td><td><button class='btn btn-default' value="+stor.placeid+" onclick='getfavdetails(this.value)'><span class='glyphicon glyphicon-menu-right'></span></button></td></tr>";
+       k--;
+     }
+
+      tab1+="</tbody></table></div>";
+
+     if(Object.keys(localStorage).length==0)
+      {
+        tablediv1.innerHTML="<div class='table-responsive'><table class='table'><tbody><tr><td class='warning'>No Records.</td></tr></tbody></table></div>";
+         //tablediv.className = tablediv.className.replace(/\bhidden\b/g, "show"); 
+      }
+     else {tablediv1.innerHTML="<button onclick='getfav()' class='col-xs-offset-11 btn btn-default' disabled>Details<span class='glyphicon glyphicon-menu-right'></span></button>"+tab1; 
+   }
+
+
+      }
+
+      function delstorage(v)
+      {
+        //alert(v);
+        localStorage.removeItem(v);
+        fav();
+      }
+
+      function getfav()
+      {
+        tablediv1.innerHTML=retain1;
+      }
+
+      function ftable(v)
+      {
+        retain1=tablediv1.innerHTML;
+        tablediv1.innerHTML="<button onclick='getfav()' class='col-xs-offset-11 btn btn-default'>Details<span class='glyphicon glyphicon-menu-right'></span></button>"+tab1;
+        document.getElementById(v).style.backgroundColor="yellow";
+
+      }
+
+      function del(d)
+      {
+        document.getElementById('favstar').style.color="";
+        delstorage(d);
+      }
+
+function getfavdetails(id)
+{
+
+  stor1=JSON.parse(localStorage.getItem(id));
+tablediv1.innerHTML="<div class='col-xs-12'><center><h3><b>"+stor1.placename+"</b></h3><center></div><div class='row'><button name='"+id+"' onclick='ftable(this.name)' class=' btn btn-default '>List<span class='glyphicon glyphicon-menu-left'></span></button><button value="+stor1.placeid+" onclick='del(this.value)' class='col-xs-offset-10 btn btn-default btn-sm '><span style='color:yellow;' id='favstar' class='glyphicon glyphicon-star'></span></button><a id='ftweet' href='' class='btn btn-link' role='button'><img src='http://cs-server.usc.edu:45678/hw/hw8/images/Twitter.png' width='35'></a></div><ul class='nav nav-tabs nav-rtl'><li><a data-toggle='tab' href='#freviews'>Reviews</a></li><li><a data-toggle='tab' href='#fmapstab'>Maps</a></li><li><a data-toggle='tab' href='#fphotos'>Photos</a></li><li class='active' ><a data-toggle='tab' href='#finfo'>Info</a></li></ul><div class='tab-content'><div id='freviews' class='tab-pane fade'><h3><b>Reviews</b></h3></div><div id='fmapstab' class='tab-pane fade'>maps</div><div id='fphotos' class='tab-pane fade'><h3>photos</h3></div><div id='finfo' class='tab-pane fade in active'></div></div>";
+  
+  finfotab=document.getElementById("finfo");
+  fphototab=document.getElementById("fphotos");
+  fmapstab=document.getElementById("fmapstab");
+  freviewstab=document.getElementById("freviews");
+
+  finfotab.innerHTML=stor1.info;
+  fphototab.innerHTML=stor1.photo;
+  placeid=stor1.placeid;
+  res=stor1.res;
+  //alert("stored res"+res);
+
+  twitter=document.getElementById("ftweet");
+
+            twitter.href="https://twitter.com/intent/tweet?"+res;
+  //fmapstab.innerHTML=stor1.maps;
+  //freviewstab.innerHTML=stor1.reviews;
+
+//document.getElementById("fromlocation");
+
+placename=stor1.placename;
+   placeaddress=stor1.placeaddress;
+   lat=stor1.lat;
+   lon=stor1.lon;
+   fromvalue=stor1.fromvalue;
+ //initMap();
+    FMAPS="";
+     FMAPS+="<div class='col-sm-12'><div class='form-group'><div class='col-sm-3'><label for='text'>From</label><input type='text' class='form-control' id='fromlocation' value='"+fromvalue+"' name='fromlocation'></div><div class='col-sm-4'><label>To</label><input type='text' class='form-control' id='tolocation' value='"+placeaddress+"' name='tolocation' readonly></div><div class='col-sm-3'><label>Travel Mode</label><select id='fmode' class='form-control'><option value='DRIVING'>Driving</option><option value='BICYCLING'>Bicycling</option><option value='TRANSIT'>Transit</option><option value='WALKING'>Walking</option></select></div><div class='col-sm-2'><div class='row invisible'>hhhh</div><div class='row'><button type='button' id='"+fromvalue+"' class='btn btn-primary' onclick='fgetdir(this.id)'>Get Directions</button></div></div></div></div><div class='col-sm-2'><button id='pic' class='btn btn-link' ><img id='fsmallpic' onclick='fchooseview()' src='http://cs-server.usc.edu:45678/hw/hw8/images/Pegman.png' width='33'></button></div><div class='col-xs-12' id='fmapspace'></div><div id='fright-panel' class='col-xs-12'></div>";
+
+fmapstab.innerHTML=FMAPS;
+
+ finitMap();
+
+
+FREVIEW="<div class='row'><div class='col-xs-2'><select id='freviewtype' class='form-control'><option value='google'>Google Reviews</option><option value='yelp'>Yelp Reviews</option></select></div><div class='col-xs-2'><select id='frevieworder' class='form-control'><option value='default'>Default Order</option><option value='highrank'>Highest Rating</option><option value='lowrank'>Lowest Rating</option><option value='mostrecent'>Most Recent</option><option value='leastrecent'>Least Recent</option></select></div></div><div class='row'><div id='freviewarea' class='col-xs-12'>gcgchgc</div></div>";
+
+freviewstab.innerHTML=FREVIEW;
+
+freviewarea=document.getElementById('freviewarea');
+
+reviewtable=stor1.reviewtable;
+
+yelpreviewtable=stor1.yelpreviewtable;
+
+
+
+freviewarea.innerHTML=reviewtable;
+freviewtype=document.getElementById('freviewtype');
+ document.getElementById("freviewtype").addEventListener('change',fcheckreviewtype);
+     function fcheckreviewtype()
+{ //alert(freviewtype.value);
+     if(freviewtype.value=="google")
+     {
+     freviewarea.innerHTML=reviewtable;
+
+     document.getElementById('frevieworder').value="default";  
+} 
+
+     if(freviewtype.value=="yelp")
+     {
+     freviewarea.innerHTML=yelpreviewtable;
+     document.getElementById('frevieworder').value="default";
+     //document.getElementById('revieworder').innerHTML="Default Order;"
+     //alert(document.getElementById('frevieworder').value);
+}
+     }
+
+
+
+
+      }
+
+      function fgetdir(fro)
+      {
+        //fromval=from.value;
+        
+        if(fro.toUpperCase()=="YOUR LOCATION"||fro.toUpperCase()=="MY LOCATION")
+        {
+          
+          forigin1={'lat':Number(lat), 'lng': Number(lon)};
+        }
+        else
+        {
+          forigin1=fro;
+        }
+        //initMap();
+       // directionsDisplay.setMap(null);
+        //directionsDisplay=null;
+        //var directionsDisplay = new google.maps.DirectionsRenderer;
+       // var directionsService = new google.maps.DirectionsService;
+
+        //directionsDisplay.setMap(null);
+        //directionsDisplay.set('directions', null);
+       // directionsDisplay.setMap(map);
+       // document.getElementById('right-panel').innerHTML="";
+      // directionsDisplay.setPanel(null);
+       // directionsDisplay.setPanel(document.getElementById('right-panel'));
+       directionsDisplay.setMap(null);
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(null);
+        directionsDisplay.setPanel(document.getElementById('fright-panel'));
+
+        fcalculateAndDisplayRoute(directionsService, directionsDisplay);
+        document.getElementById('fmode').addEventListener('change', function() {
+          fcalculateAndDisplayRoute(directionsService, directionsDisplay);
+        });
+      }
+
+      function fcalculateAndDisplayRoute(directionsService, directionsDisplay) {
+
+        marker.setMap(null);
+        
+        var selectedMode = document.getElementById('fmode').value;
+        //alert(origin1);
+        directionsService.route({
+          origin:forigin1,  // Haight.
+          destination:placeaddress,
+          provideRouteAlternatives: true,  // Ocean Beach.
+          // Note that Javascript allows us to access the constant
+          // using square brackets and a string value as its
+          // "property."
+          travelMode: google.maps.TravelMode[selectedMode]
+        }, function(response, status) {
+          if (status == 'OK') {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+      }
+
+      function fchooseview()
+      {
+        //alert(fsetpic);
+         if(fsetpic==1)
+         {
+          a=document.getElementById("fsmallpic");
+           a.src= "http://cs-server.usc.edu:45678/hw/hw8/images/Map.png";
+          finitialize();
+         }
+         else
+         {
+          b=document.getElementById("fsmallpic");
+         
+          b.src="http://cs-server.usc.edu:45678/hw/hw8/images/Pegman.png";
+          finitMap();
+         }
+      }
+
+      function finitialize() {
+       // var setpic;
+        var panorama = new google.maps.StreetViewPanorama(
+            document.getElementById('fmapspace'),
+            {
+              position: placeval,
+              pov: {heading: 165, pitch: 0},
+              zoom: 1
+            });
+        fsetpic=0;
+      }
+
+      function finitMap() {
+        //alert(document.getElementById('mapspace').innerHTML); 
+         map = new google.maps.Map(document.getElementById('fmapspace'), {
+          zoom: 8,
+          center: {lat: -34.397, lng: 150.644}
+        }); 
+         geocoder = new google.maps.Geocoder();
+          directionsDisplay = new google.maps.DirectionsRenderer;
+         directionsService = new google.maps.DirectionsService;
+
+       // alert(document.getElementById('mapspace').innerHTML);
+       //alert(placename+","+placeaddress);
+          fgeocodeAddress(geocoder, map,placename+","+placeaddress);
+        
+      }
+
+      function fgeocodeAddress(geocoder, resultsMap,add) {
+        fsetpic=1;
+        var address = add;
+        geocoder.geocode({'address': address}, function(results, status) {
+          if (status === 'OK') {
+            placeval=results[0].geometry.location;
+            resultsMap.setCenter(results[0].geometry.location);
+            marker = new google.maps.Marker({
+              map: resultsMap,
+              position: results[0].geometry.location
+            });
+           // alert(document.getElementById('mapspace').innerHTML);
+          } else {
+            alert('Geocode was not successful for the following reason: ' + status);
+          }
+        });
+      }
+      
+
+   
+
+
+
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAWCDfTQCL36oKKsl5aLF98U6imeFF_0Aw&libraries=places&callback=initAutocomplete"
+        async defer></script>
+        
+</body>
+</html>
